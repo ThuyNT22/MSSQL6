@@ -93,3 +93,22 @@ select top 1 * from Books order by Amount desc;
 --Câu 12
 select * from Books where Author like N'Eran Katz';
 --Câu 13
+update Books set Price = (0.9 * Price) where IdPublish in 
+    (select Id from Publish where Year <= 2008);
+--Câu 14
+create view data_books as
+select A.Id,A.Name,B.Year,C.Publishers,A.Category from Books A
+inner join Publish B on A.IdPublish = B.Id
+inner join Publishers C on B.IdPublishers = C.Id;
+select count(Id) as 'So_dau_sach_cua_moi_NXB' from data_books group by Publishers;
+--Cau 15
+select count(Id) as 'So_dau_sach_cua_moi_loai_sach' from Books group by Name;
+--Cau 16
+create index chi_muc on Books(Name);
+--Cau 17
+create view info_books as
+select A.Id,A.Name,A.Author,C.Publishers,A.Price from Books A
+inner join Publish B on A.IdPublish = B.Id
+inner join Publishers C on B.IdPublishers = C.Id;
+select * from info_books;
+--Cau 18
